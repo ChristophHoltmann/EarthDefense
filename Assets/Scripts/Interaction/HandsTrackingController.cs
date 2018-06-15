@@ -21,7 +21,7 @@ public class HandsTrackingController : MonoBehaviour
     }
 
     public GameObject TrackingObject;
-    public TextMesh StatusText;
+    //public TextMesh StatusText;
     public Color DefaultColor = Color.white;
     public Color StartedColor = Color.green;
     public Color TapColor = Color.blue;
@@ -49,7 +49,7 @@ public class HandsTrackingController : MonoBehaviour
         gestureRecognizer.HoldCompleted += GestureRecognizer_HoldCompleted;
         gestureRecognizer.HoldCanceled += GestureRecognizer_HoldCanceled;
         gestureRecognizer.StartCapturingGestures();
-        StatusText.text = "READY";
+        //StatusText.text = "READY";
     }
 
     void ChangeObjectColor(GameObject obj, Color color)
@@ -58,73 +58,73 @@ public class HandsTrackingController : MonoBehaviour
         if (rend)
         {
             rend.material.color = color;
-            Debug.LogFormat("Color Change: {0}", color.ToString());
+            //Debug.LogFormat("Color Change: {0}", color.ToString());
         }
     }
 
     private void GestureRecognizer_Ended(RecognitionEndedEventArgs args)
     {
         uint id = args.source.id;
-        StatusText.text = $"Started - Kind:{args.source.kind.ToString()} - Id:{id}";
+        //StatusText.text = $"Started - Kind:{args.source.kind.ToString()} - Id:{id}";
         if (trackingObject.ContainsKey(activeId))
         {
             ChangeObjectColor(trackingObject[activeId], StartedColor);
-            StatusText.text += "-TRACKED";
+            //StatusText.text += "-TRACKED";
         }
     }
 
     private void GestureRecognizer_Started(RecognitionStartedEventArgs args)
     {
         uint id = args.source.id;
-        StatusText.text = $"Ended - Kind:{args.source.kind.ToString()} - Id:{id}";
+        //StatusText.text = $"Ended - Kind:{args.source.kind.ToString()} - Id:{id}";
         if (trackingObject.ContainsKey(activeId))
         {
             ChangeObjectColor(trackingObject[activeId], DefaultColor);
-            StatusText.text += "-TRACKED";
+            //StatusText.text += "-TRACKED";
         }
     }
 
     private void GestureRecognizer_HoldStarted(HoldStartedEventArgs args)
     {
         uint id = args.source.id;
-        StatusText.text = $"HoldStarted - Kind:{args.source.kind.ToString()} - Id:{id}";
+        //StatusText.text = $"HoldStarted - Kind:{args.source.kind.ToString()} - Id:{id}";
         if (trackingObject.ContainsKey(activeId))
         {
             ChangeObjectColor(trackingObject[activeId], HoldColor);
-            StatusText.text += "-TRACKED";
+            //StatusText.text += "-TRACKED";
         }
     }
 
     private void GestureRecognizer_HoldCompleted(HoldCompletedEventArgs args)
     {
         uint id = args.source.id;
-        StatusText.text = $"HoldCompleted - Kind:{args.source.kind.ToString()} - Id:{id}";
+        //StatusText.text = $"HoldCompleted - Kind:{args.source.kind.ToString()} - Id:{id}";
         if (trackingObject.ContainsKey(activeId))
         {
             ChangeObjectColor(trackingObject[activeId], DefaultColor);
-            StatusText.text += "-TRACKED";
+            //StatusText.text += "-TRACKED";
         }
     }
 
     private void GestureRecognizer_HoldCanceled(HoldCanceledEventArgs args)
     {
         uint id = args.source.id;
-        StatusText.text = $"HoldCanceled - Kind:{args.source.kind.ToString()} - Id:{id}";
+        //StatusText.text = $"HoldCanceled - Kind:{args.source.kind.ToString()} - Id:{id}";
         if (trackingObject.ContainsKey(activeId))
         {
             ChangeObjectColor(trackingObject[activeId], DefaultColor);
-            StatusText.text += "-TRACKED";
+            //StatusText.text += "-TRACKED";
         }
     }
 
     private void GestureRecognizerTapped(TappedEventArgs args)
     {
         uint id = args.source.id;
-        StatusText.text = $"Tapped - Kind:{args.source.kind.ToString()} - Id:{id}";
+        //StatusText.text = $"Tapped - Kind:{args.source.kind.ToString()} - Id:{id}";
         if (trackingObject.ContainsKey(activeId))
         {
             ChangeObjectColor(trackingObject[activeId], TapColor);
-            StatusText.text += "-TRACKED";
+            //StatusText.text += "-TRACKED";
         }
     }
 
@@ -142,16 +142,13 @@ public class HandsTrackingController : MonoBehaviour
 
         var obj = Instantiate(TrackingObject) as GameObject;
 
-        StatusText.text += "Instantiated";
+        //StatusText.text += "Instantiated";
         Vector3 pos;
 
         if (args.state.sourcePose.TryGetPosition(out pos))
         {
             obj.transform.position = pos;
-            StatusText.text += pos;
         }
-
-        StatusText.text += "go";
 
         trackingObject.Add(id, obj);
     }
