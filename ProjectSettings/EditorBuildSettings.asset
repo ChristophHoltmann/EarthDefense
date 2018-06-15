@@ -20,3 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TargetSphere.unity
     guid: 06f07ef64c96e814cb4056fdde5ed749
+  - enabled: 1
+    path: Assets/Scenes/EarthDefender.unity
+    guid: 30b6b93b914c6ce4182dcf0492f06508
+  m_configObjects: {}
