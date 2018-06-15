@@ -19,10 +19,10 @@ public class HandDestoyer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var destroyable = other.GetComponent<Destroyable>();
-        if (destroyable != null)
+        var meteor = other.GetComponent<Meteor>();
+        if (meteor != null)
         {
-            destroyable.Destroy();
+            meteor.OnClick();
             return;
         }
 

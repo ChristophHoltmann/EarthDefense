@@ -9,13 +9,20 @@ public class Backend : MonoBehaviour {
     public Earth Earth { get; private set; }
     public float RangeMaxMetoer { get; private set; }
 
-    public int numberWaves { get; private set; }
-    private int currentWave = -1;
+    public TextMesh scoreText;
+    public TextMesh messageText;
+    public MeshRenderer[] hearts;
+    private const int newWaveScore = 50;
+
+    //public int numberWaves { get; private set; }
+    //private int currentWave = -1;
     private int currentMeteorNumber = 0;
     private bool gameFinished = false;
     private float timer = 0;
-    public float[] speedWaves { get; private set; }
-    public int[] numberMeteorsPerWaves { get; private set; }
+    private float messageTimer = 0;
+    private const float messageTime = 2.5f;
+    public float[][] meteors { get; private set; }
+    //public int[] numberMeteorsPerWaves { get; private set; }
 
     public static void SetEarth(Earth earth)
     {
@@ -42,11 +49,20 @@ public class Backend : MonoBehaviour {
     void Awake () {
         // Init values
         Score = 0;
-        Life = 30;
+        Life = 3;
         RangeMaxMetoer = 3f;
-        numberWaves = 3;
-        speedWaves = new float[]{ 2f, 1.5f, 1f };
-        numberMeteorsPerWaves = new int[]{ 3, 3, 3 };
+        var newWaveTime = messageTime;
+        // time, value, robustness
+        // robustness new wave
+        meteors = new float[][] {
+            new float[]{ newWaveTime, 0f },
+            new float[]{2f,1f }, new float[] { 2f, 1f }, new float[] { 2f, 1f },
+            new float[]{ newWaveTime, 0f },
+            new float[]{1.5f,1f }, new float[]{ 1.5f, 1f },new float[]{ 1.5f, 2f },
+            new float[]{ newWaveTime, 0f },
+            new float[]{1f,1f },new float[]{1f,1f },new float[]{1f,2f },new float[]{1f,2f },
+            new float[]{ newWaveTime, 0f },
+            new float[]{0.5f,3f }, new float[]{ 0.5f,3f },new float[]{ 0.5f,3f },};
 
 
         // singelton
@@ -60,57 +76,60 @@ public class Backend : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        ShowScore();
+        ShowHearts();
+
         if (!gameFinished)
         {
             // check for end game 
-            if (currentWave >= numberWaves)
+            if (currentMeteorNumber >= meteors.Length)
             {
-                Debug.Log("GAME WON");
+                ShowMessage("GAME WON");
                 gameFinished = true;
             }
             if (Life <= 0)
             {
-                Debug.Log("GAME OVER");
+                ShowMessage("GAME OVER");
                 gameFinished = true;
             }
 
-            // start game 
-            if (currentWave == -1)
-            {
-                Debug.Log("START GAME");
-                currentWave = 0;
-                Debug.Log("WAVE " + currentWave);
-            }
-
-            
+                        
             // check timer
             if (timer < 0f)
             {
-                //reset timer based on wave speed
-                timer = speedWaves[currentWave];
+                var values = meteors[currentMeteorNumber];
 
-                // timer ready
-                Debug.Log("WAVE: " + currentWave + " METEOR: " + currentMeteorNumber);
-                AddMeteor();
-
-                // increase meteornumber counter
-                currentMeteorNumber++;
-
-                // check for next wave
-                if (currentMeteorNumber >= numberMeteorsPerWaves[currentWave])
+                if(values[1] < 0.001f)
                 {
-                    // next wave
-                    currentWave++;
-                    currentMeteorNumber = 0;
-                    Debug.Log("WAVE " + currentWave);
-
+                    //new wave
+                    ShowMessage("NEW WAVE");
+                    Score += newWaveScore;
                 }
+                else
+                {
+                    // timer ready
+                    AddMeteor((int)calcScore(values[0], values[1]),(int)values[1]);
+                }               
+
+                //reset timer based on wave speed
+                timer = values[0];
+
+                currentMeteorNumber++;
 
             }
             else
             {
                 // decrease timer
                 timer -= Time.deltaTime;
+            }
+
+            if (messageTimer < 0f)
+            {
+                HideMessage();
+            }
+            else
+            {
+                messageTimer -= Time.deltaTime;
             }
         }
 
@@ -137,9 +156,35 @@ public class Backend : MonoBehaviour {
         return go;
     }
 
-    private void AddMeteor()
+    private float calcScore(float timing, float robustness)
+    {
+        return 10f * robustness * ((2f - timing) + 1f);
+    }
+
+    private void ShowHearts()
+    {
+        for(int i = 0; i < hearts.Length; i++)
+        {
+            if(Life > i)
+            {
+                //red
+                hearts[i].material.color = Color.red;
+            }
+            else
+            {
+                //grey 
+                hearts[i].material.color = new Color(135, 135, 135);
+            }
+        }
+    }
+
+    private void AddMeteor(int value, int robustness)
     {
         var newMeteor = CreateRandomPrefab();
+
+        var meteor = newMeteor.GetComponent<Meteor>();
+        meteor.setParameters(value, robustness);
+
         // Debug.Log("add meteor");
         var earthPos = getEarthPos();
         // default position
@@ -153,5 +198,27 @@ public class Backend : MonoBehaviour {
 
         //set position
         newMeteor.transform.position = earthPos + meteorPosRelative;
+    }
+
+    public static void DestroyMeteor(Meteor meteor)
+    {
+        _instance.Score += meteor.Value;
+        Destroy(meteor.gameObject);
+    }
+
+    private void ShowScore()
+    {
+        scoreText.text = "SCORE:\n" + Score;
+    }
+
+    private void HideMessage()
+    {
+        messageText.text = "";
+    }
+
+    private void ShowMessage(string message)
+    {
+        messageText.text = message;
+        messageTimer = messageTime;
     }
 }
