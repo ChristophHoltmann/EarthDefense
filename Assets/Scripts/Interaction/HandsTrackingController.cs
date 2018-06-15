@@ -151,6 +151,8 @@ public class HandsTrackingController : MonoBehaviour
             StatusText.text += pos;
         }
 
+        StatusText.text += "go";
+
         trackingObject.Add(id, obj);
     }
         
