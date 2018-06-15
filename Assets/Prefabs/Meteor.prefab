@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4406387816378700}
   - component: {fileID: 135891757279976200}
+  - component: {fileID: 114930121678855676}
   m_Layer: 0
   m_Name: Meteor
   m_TagString: Untagged
@@ -64,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1153108400095718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.118, y: 0, z: 0}
+  m_LocalPosition: {x: -0.132, y: 0, z: 3}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 4386754632843130}
@@ -113,6 +114,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1768267111367942}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114930121678855676
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1153108400095718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5134f8e4c5230ca4cbbddc61225fb909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135891757279976200
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -120,7 +132,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1153108400095718}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
