@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backend : MonoBehaviour {
-
+public class Backend : MonoBehaviour {
+
+
+
     public AudioSource source;
     public AudioClip bgMusic;
+    public AudioClip takeOffSound;
+    public AudioClip explosionSound;
     public AudioClip gameOverSound;
 
     public int Score { get; private set; }
@@ -53,7 +57,8 @@ public class Backend : MonoBehaviour {
 
 
     // Use this for initialization
-    void Awake () {
+    void Awake () {
+
         //source.Play((AudioClip)Resources.Load("bgMusic"));
         
         // Init values
@@ -78,14 +83,13 @@ public class Backend : MonoBehaviour {
         _instance = this;
 
         source.clip = bgMusic;
-        source.Play();
-    }
-
-
-
-
-
-    // Update is called once per frame
+        source.Play();
+
+    }
+
+
+    // Update is called once per frame
+
     void Update () {
 
         ShowScore();
@@ -112,11 +116,20 @@ public class Backend : MonoBehaviour {
                 }
 
                 gameFinished = true;
-                source.Stop();
-                source.clip = null;
-                //source.PlayOneShot((AudioClip)Resources.Load("gameOver"));
-                source.clip = gameOverSound;
+                source.Stop();
+
+                source.clip = null;
+
+                //source.PlayOneShot((AudioClip)Resources.Load("gameOver"));
+
+                source.clip = takeOffSound;
                 source.Play();
+
+                source.clip = explosionSound;
+                source.Play();
+
+                //source.clip = gameOverSound;
+                //source.Play();
             }
 
                         

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Meteor : MonoBehaviour {
 
+    public AudioSource source;
+    public AudioClip explosionSound;
+
     [SerializeField]
     private GameObject explosion;
 
@@ -32,6 +35,8 @@ public class Meteor : MonoBehaviour {
 
         if(Robustness <= 0)
         {
+            source.clip = explosionSound;
+            source.Play();
             Backend.DestroyMeteor(this);
         }
     }
