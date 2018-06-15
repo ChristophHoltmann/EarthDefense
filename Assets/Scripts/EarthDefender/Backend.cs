@@ -116,9 +116,28 @@ public class Backend : MonoBehaviour {
 
 	}
 
+    public List<GameObject> asteroids;
+
+    GameObject CreateRandomPrefab()
+    {
+        int idx = UnityEngine.Random.Range(0, asteroids.Count);
+
+        var go =  Instantiate<GameObject>(asteroids[idx]);
+
+        //rescale go
+        var scale = 0.1f;
+        go.transform.localScale = new Vector3(scale, scale, scale);
+        go.AddComponent<Meteor>();
+        go.AddComponent<SphereCollider>();
+        var col = go.GetComponent<SphereCollider>();
+        col.isTrigger = true;
+
+        return go;
+    }
+
     private void AddMeteor()
     {
-        var newMeteor = Instantiate<GameObject>(prefabMeteor);
+        var newMeteor = CreateRandomPrefab();
         // Debug.Log("add meteor");
         var earthPos = getEarthPos();
         // default position

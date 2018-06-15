@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SceneSelectionMenu
   - SceneSelectionMenuToolsContent
+  - Destroyable
   layers:
   - Default
   - TransparentFX

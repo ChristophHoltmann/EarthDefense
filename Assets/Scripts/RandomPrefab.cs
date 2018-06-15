@@ -14,11 +14,11 @@ public class RandomPrefab : MonoBehaviour {
         CreateRandomPrefab();
     }
 
-    void CreateRandomPrefab()
+    GameObject CreateRandomPrefab()
     {
         int idx = Random.Range(0, asteroids.Count);
 
-        Instantiate(asteroids[idx]);
+        return Instantiate(asteroids[idx]);
     }
 
     // Update is called once per frame
