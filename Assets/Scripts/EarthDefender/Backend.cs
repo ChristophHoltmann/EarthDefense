@@ -70,22 +70,25 @@ public class Backend : MonoBehaviour {
 	}
 
 
+    void BuyTurret()
+    {
+        var earthPos = getEarthPos();
+        var meteorPosRelative = new Vector3(RangeMaxMetoer, 0, 0);
+        var earthAround = UnityEngine.Random.Range(0f, 1f);
+        var angleUp = UnityEngine.Random.Range(0f, 1f);
+        meteorPosRelative = Quaternion.Euler(0, 360 * earthAround, 45 * angleUp) * meteorPosRelative;
 
+        //set position
+        var position = earthPos + meteorPosRelative;
+        AddTurret(position);
+    }
 
 	
 	// Update is called once per frame
 	void Update () {
         if (Input.GetKeyDown("a"))
         {
-            var earthPos = getEarthPos();
-            //var meteorPosRelative = new Vector3(RangeMaxMetoer, 0, 0);
-            //var earthAround = UnityEngine.Random.Range(0f, 1f);
-            //var angleUp = UnityEngine.Random.Range(0f, 1f);
-            //meteorPosRelative = Quaternion.Euler(0, 360 * earthAround, 45 * angleUp) * meteorPosRelative;
-
-            //set position
-            var position = earthPos + new Vector3(0.5f,0,0);
-            AddTurret(position);
+            BuyTurret();
         }
 
         ShowScore();
