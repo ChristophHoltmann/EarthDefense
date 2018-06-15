@@ -11,6 +11,7 @@ public class Backend : MonoBehaviour {
 
     public TextMesh scoreText;
     public TextMesh messageText;
+    public MeshRenderer[] hearts;
 
     //public int numberWaves { get; private set; }
     //private int currentWave = -1;
@@ -47,7 +48,7 @@ public class Backend : MonoBehaviour {
     void Awake () {
         // Init values
         Score = 0;
-        Life = 30;
+        Life = 3;
         RangeMaxMetoer = 3f;
         var newWaveTime = messageTime;
         // speed, value, robustness
@@ -75,6 +76,7 @@ public class Backend : MonoBehaviour {
 	void Update () {
 
         ShowScore();
+        ShowHearts();
 
         if (!gameFinished)
         {
@@ -131,6 +133,23 @@ public class Backend : MonoBehaviour {
         }
 
 	}
+
+    private void ShowHearts()
+    {
+        for(int i = 0; i < hearts.Length; i++)
+        {
+            if(Life > i)
+            {
+                //red
+                hearts[i].material.color = Color.red;
+            }
+            else
+            {
+                //grey 
+                hearts[i].material.color = new Color(135, 135, 135);
+            }
+        }
+    }
 
     private void AddMeteor(int value, int robustness)
     {
