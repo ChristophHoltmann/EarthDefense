@@ -8,7 +8,7 @@ public class Meteor : MonoBehaviour {
     private GameObject explosion;
 
     private bool moving = false;
-    private const float _speed = 0.75f;
+    private const float _speed = 0.4f;
    
 
     public int Value { get; private set; }

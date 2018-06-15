@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backend : MonoBehaviour {
-
+public class Backend : MonoBehaviour
+{
+
+
+
     public AudioSource source;
     public AudioClip bgMusic;
     public AudioClip gameOverSound;
@@ -17,6 +20,7 @@ public class Backend : MonoBehaviour {
     public TextMesh messageText;
     public MeshRenderer[] hearts;
     private const int newWaveScore = 50;
+    private bool gameHasStarted = false;
 
     [SerializeField]
     private GameObject earthExplosion;
@@ -43,6 +47,13 @@ public class Backend : MonoBehaviour {
     }
 
     public int Life { get; private set; }
+
+    public static void StartGame()
+    {
+        _instance.gameHasStarted = true;
+        Debug.Log("start");
+    }
+
     private static Backend _instance;
     public GameObject particlePrefab;
 
@@ -53,9 +64,11 @@ public class Backend : MonoBehaviour {
 
 
     // Use this for initialization
-    void Awake () {
+    void Awake()
+    {
+
         //source.Play((AudioClip)Resources.Load("bgMusic"));
-        
+
         // Init values
         Score = 0;
         Life = 3;
@@ -78,15 +91,19 @@ public class Backend : MonoBehaviour {
         _instance = this;
 
         source.clip = bgMusic;
-        source.Play();
-    }
-
-
-
-
-
-    // Update is called once per frame
-    void Update () {
+        source.Play();
+
+    }
+
+
+    // Update is called once per frame
+
+    void Update()
+    {
+        if (!gameHasStarted)
+        {
+            return;
+        }
 
         ShowScore();
         ShowHearts();
@@ -103,7 +120,7 @@ public class Backend : MonoBehaviour {
             {
                 ShowMessage("GAME OVER");
 
-                if(earthExplosion != null)
+                if (earthExplosion != null)
                 {
                     var exlopsionObject = Instantiate(earthExplosion);
                     exlopsionObject.transform.position = Earth.transform.position;
@@ -112,20 +129,23 @@ public class Backend : MonoBehaviour {
                 }
 
                 gameFinished = true;
-                source.Stop();
-                source.clip = null;
-                //source.PlayOneShot((AudioClip)Resources.Load("gameOver"));
+                source.Stop();
+
+                source.clip = null;
+
+                //source.PlayOneShot((AudioClip)Resources.Load("gameOver"));
+
                 source.clip = gameOverSound;
                 source.Play();
             }
 
-                        
+
             // check timer
             if (timer < 0f)
             {
                 var values = meteors[currentMeteorNumber];
 
-                if(values[1] < 0.001f)
+                if (values[1] < 0.001f)
                 {
                     //new wave
                     ShowMessage("NEW WAVE");
@@ -134,8 +154,8 @@ public class Backend : MonoBehaviour {
                 else
                 {
                     // timer ready
-                    AddMeteor((int)calcScore(values[0], values[1]),(int)values[1]);
-                }               
+                    AddMeteor((int)calcScore(values[0], values[1]), (int)values[1]);
+                }
 
                 //reset timer based on wave speed
                 timer = values[0];
@@ -159,7 +179,7 @@ public class Backend : MonoBehaviour {
             }
         }
 
-	}
+    }
 
     public List<GameObject> asteroids;
 
@@ -167,7 +187,7 @@ public class Backend : MonoBehaviour {
     {
         int idx = UnityEngine.Random.Range(0, asteroids.Count);
 
-        var go =  Instantiate<GameObject>(asteroids[idx]);
+        var go = Instantiate<GameObject>(asteroids[idx]);
 
         //rescale go
         var scale = 0.1f;
@@ -189,9 +209,9 @@ public class Backend : MonoBehaviour {
 
     private void ShowHearts()
     {
-        for(int i = 0; i < hearts.Length; i++)
+        for (int i = 0; i < hearts.Length; i++)
         {
-            if(Life > i)
+            if (Life > i)
             {
                 //red
                 hearts[i].material.color = Color.red;

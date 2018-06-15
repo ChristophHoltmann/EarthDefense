@@ -5,17 +5,18 @@ using UnityEngine;
 
 public class EarthHandler : MonoBehaviour, IInputClickHandler
 {
-    private bool isPlacing;
+    private bool isPlacing = true;
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
+        Backend.StartGame();
+
         isPlacing = false;
     }
 
     private void Update()
     {
-
-        if(!isPlacing)
+        if (!isPlacing)
         {
             return;
         }
