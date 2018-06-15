@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Earth : MonoBehaviour {
 
+    public RedFlickerEffect flicker;
+
 	// Use this for initialization
 	void Start () {
 
@@ -13,9 +15,9 @@ public class Earth : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Collide");
         Backend.EarthHit();
         Destroy(other.gameObject);
+        flicker.StartFlicker();
     }
 
    
