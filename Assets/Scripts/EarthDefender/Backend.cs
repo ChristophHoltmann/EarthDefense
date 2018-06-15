@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Backend : MonoBehaviour {
 
+    public AudioSource source;
+    public AudioClip bgMusic;
+    public AudioClip gameOverSound;
+
     public int Score { get; private set; }
     public Earth Earth { get; private set; }
     public float RangeMaxMetoer { get; private set; }
@@ -47,6 +51,8 @@ public class Backend : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        //source.Play((AudioClip)Resources.Load("bgMusic"));
+        
         // Init values
         Score = 0;
         Life = 3;
@@ -67,14 +73,17 @@ public class Backend : MonoBehaviour {
 
         // singelton
         _instance = this;
-	}
+
+        source.clip = bgMusic;
+        source.Play();
+    }
 
 
 
 
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
         ShowScore();
         ShowHearts();
@@ -91,6 +100,11 @@ public class Backend : MonoBehaviour {
             {
                 ShowMessage("GAME OVER");
                 gameFinished = true;
+                source.Stop();
+                source.clip = null;
+                //source.PlayOneShot((AudioClip)Resources.Load("gameOver"));
+                source.clip = gameOverSound;
+                source.Play();
             }
 
                         
