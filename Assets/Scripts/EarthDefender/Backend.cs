@@ -14,7 +14,7 @@ public class Backend : MonoBehaviour {
     public MeshRenderer[] hearts;
     private const int newWaveScore = 50;
 
-    [Serializable]
+    [SerializeField]
     private GameObject earthExplosion;
 
     //public int numberWaves { get; private set; }
