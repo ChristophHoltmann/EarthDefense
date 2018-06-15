@@ -8,6 +8,9 @@ public class Turret : MonoBehaviour {
     private float shootingTimer = 0f;
     private const float ShootingTime = 2f;
 
+    public AudioSource source;
+    public AudioClip laserSound;
+
     public ParticleSystem laserBeam;
 
     //private void OnTriggerEnter(Collider other)
@@ -61,6 +64,10 @@ public class Turret : MonoBehaviour {
         // show beam
         if (laserBeam.isPlaying) laserBeam.Stop();
         if (!laserBeam.isPlaying)laserBeam.Play();
+
+        //sound
+        source.clip = laserSound;
+        source.Play();
 
         //click meteor
 
