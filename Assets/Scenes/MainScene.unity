@@ -189,6 +189,23 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
+  - Keyword: Reload
+    Response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 257002432}
+          m_MethodName: ReloadScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   IsGlobalListener: 1
   PersistentKeywords: 0
 --- !u!114 &18322101
@@ -209,6 +226,8 @@ MonoBehaviour:
     KeyCode: 49
   - Keyword: Hide Menu
     KeyCode: 50
+  - Keyword: Reload
+    KeyCode: 51
   recognitionConfidenceLevel: 2
 --- !u!1001 &32278802
 Prefab:
@@ -411,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 257002430}
   - component: {fileID: 257002431}
+  - component: {fileID: 257002432}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -445,6 +465,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 513270adb7bada540b23d40055a13fe6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &257002432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 257002429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d513fc01e78d2264e89fc23fb6593cae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &287341461
