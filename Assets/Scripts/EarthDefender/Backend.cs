@@ -9,13 +9,13 @@ public class Backend : MonoBehaviour {
     public Earth Earth { get; private set; }
     public float RangeMaxMetoer { get; private set; }
 
-    public int numberWaves { get; private set; }
-    private int currentWave = -1;
+    //public int numberWaves { get; private set; }
+    //private int currentWave = -1;
     private int currentMeteorNumber = 0;
     private bool gameFinished = false;
     private float timer = 0;
-    public float[] speedWaves { get; private set; }
-    public int[] numberMeteorsPerWaves { get; private set; }
+    public float[][] meteors { get; private set; }
+    //public int[] numberMeteorsPerWaves { get; private set; }
 
     public static void SetEarth(Earth earth)
     {
@@ -44,9 +44,17 @@ public class Backend : MonoBehaviour {
         Score = 0;
         Life = 30;
         RangeMaxMetoer = 3f;
-        numberWaves = 3;
-        speedWaves = new float[]{ 2f, 1.5f, 1f };
-        numberMeteorsPerWaves = new int[]{ 3, 3, 3 };
+        // speed, value, robustness
+        // robustness new wave
+        meteors = new float[][] {
+            new float[]{2f,0f,0f },
+            new float[]{2f,10f,1f }, new float[] { 2f, 10f, 1f }, new float[] { 2f, 10f, 1f },
+            new float[]{2f,50f,0f },
+            new float[]{1.5f,10f,1f }, new float[]{ 1.5f, 10f,1f },new float[]{ 1.5f, 30f,2f },
+            new float[]{2f,50f,0f },
+            new float[]{1f,15f,1f },new float[]{1f,15f,1f },new float[]{1f,30f,2f },new float[]{1f,30f,2f },
+            new float[]{2f,50f,0f },
+            new float[]{0.5f,30f,3f }, new float[]{ 0.5f,30f,3f },new float[]{ 0.5f,30f,3f },};
 
 
         // singelton
@@ -63,7 +71,7 @@ public class Backend : MonoBehaviour {
         if (!gameFinished)
         {
             // check for end game 
-            if (currentWave >= numberWaves)
+            if (currentMeteorNumber >= meteors.Length)
             {
                 Debug.Log("GAME WON");
                 gameFinished = true;
@@ -74,37 +82,25 @@ public class Backend : MonoBehaviour {
                 gameFinished = true;
             }
 
-            // start game 
-            if (currentWave == -1)
-            {
-                Debug.Log("START GAME");
-                currentWave = 0;
-                Debug.Log("WAVE " + currentWave);
-            }
-
-            
+                        
             // check timer
             if (timer < 0f)
             {
-                //reset timer based on wave speed
-                timer = speedWaves[currentWave];
+                var values = meteors[currentMeteorNumber];
+
+                if(values[2] < 0.001f)
+                {
+                    //new wave
+                    Debug.Log("NEW WAVE");
+                }
 
                 // timer ready
-                Debug.Log("WAVE: " + currentWave + " METEOR: " + currentMeteorNumber);
-                AddMeteor();
+                AddMeteor((int) values[1],(int) values[2]);
 
-                // increase meteornumber counter
+                //reset timer based on wave speed
+                timer = values[0];
+
                 currentMeteorNumber++;
-
-                // check for next wave
-                if (currentMeteorNumber >= numberMeteorsPerWaves[currentWave])
-                {
-                    // next wave
-                    currentWave++;
-                    currentMeteorNumber = 0;
-                    Debug.Log("WAVE " + currentWave);
-
-                }
 
             }
             else
@@ -116,9 +112,13 @@ public class Backend : MonoBehaviour {
 
 	}
 
-    private void AddMeteor()
+    private void AddMeteor(int value, int robustness)
     {
         var newMeteor = Instantiate<GameObject>(prefabMeteor);
+
+        var meteor = newMeteor.GetComponent<Meteor>();
+        meteor.setParameters(value, robustness);
+
         // Debug.Log("add meteor");
         var earthPos = getEarthPos();
         // default position
@@ -132,5 +132,13 @@ public class Backend : MonoBehaviour {
 
         //set position
         newMeteor.transform.position = earthPos + meteorPosRelative;
+    }
+
+    public static void DestroyMeteor(Meteor meteor)
+    {
+        _instance.Score += meteor.Value;
+        Destroy(meteor.gameObject);
+
+        Debug.Log("SCORE: " + _instance.Score);
     }
 }

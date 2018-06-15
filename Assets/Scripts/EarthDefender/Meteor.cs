@@ -7,7 +7,25 @@ public class Meteor : MonoBehaviour {
     private bool moving = false;
     private const float _speed = 1f;
 
-	void moveMeteor()
+    public int Value { get; private set; }
+    public int Robustness { get; private set; }
+
+    public void setParameters(int value, int robustness)
+    {
+        Value = value;
+        Robustness = robustness;
+    }
+
+    public void OnClick()
+    {
+        Robustness--;
+        if(Robustness <= 0)
+        {
+            Backend.DestroyMeteor(this);
+        }
+    }
+
+    void moveMeteor()
     {
         Vector3 posEarth = Backend.getEarthPos();
         Vector3 direction = posEarth - transform.position;
@@ -18,5 +36,10 @@ public class Meteor : MonoBehaviour {
 	void Update () {
 
         moveMeteor();
+
+        if (Input.GetKeyDown("c"))
+        {
+            OnClick();
+        }
 	}
 }
