@@ -9,11 +9,16 @@ public class Backend : MonoBehaviour {
     public Earth Earth { get; private set; }
     public float RangeMaxMetoer { get; private set; }
 
+    public TextMesh scoreText;
+    public TextMesh messageText;
+
     //public int numberWaves { get; private set; }
     //private int currentWave = -1;
     private int currentMeteorNumber = 0;
     private bool gameFinished = false;
     private float timer = 0;
+    private float messageTimer = 0;
+    private const float messageTime = 2.5f;
     public float[][] meteors { get; private set; }
     //public int[] numberMeteorsPerWaves { get; private set; }
 
@@ -44,16 +49,17 @@ public class Backend : MonoBehaviour {
         Score = 0;
         Life = 30;
         RangeMaxMetoer = 3f;
+        var newWaveTime = messageTime;
         // speed, value, robustness
         // robustness new wave
         meteors = new float[][] {
-            new float[]{2f,0f,0f },
+            new float[]{ newWaveTime, 0f,0f },
             new float[]{2f,10f,1f }, new float[] { 2f, 10f, 1f }, new float[] { 2f, 10f, 1f },
-            new float[]{2f,50f,0f },
+            new float[]{ newWaveTime, 50f,0f },
             new float[]{1.5f,10f,1f }, new float[]{ 1.5f, 10f,1f },new float[]{ 1.5f, 30f,2f },
-            new float[]{2f,50f,0f },
+            new float[]{ newWaveTime, 50f,0f },
             new float[]{1f,15f,1f },new float[]{1f,15f,1f },new float[]{1f,30f,2f },new float[]{1f,30f,2f },
-            new float[]{2f,50f,0f },
+            new float[]{ newWaveTime, 50f,0f },
             new float[]{0.5f,30f,3f }, new float[]{ 0.5f,30f,3f },new float[]{ 0.5f,30f,3f },};
 
 
@@ -68,17 +74,19 @@ public class Backend : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        ShowScore();
+
         if (!gameFinished)
         {
             // check for end game 
             if (currentMeteorNumber >= meteors.Length)
             {
-                Debug.Log("GAME WON");
+                ShowMessage("GAME WON");
                 gameFinished = true;
             }
             if (Life <= 0)
             {
-                Debug.Log("GAME OVER");
+                ShowMessage("GAME OVER");
                 gameFinished = true;
             }
 
@@ -91,11 +99,14 @@ public class Backend : MonoBehaviour {
                 if(values[2] < 0.001f)
                 {
                     //new wave
-                    Debug.Log("NEW WAVE");
+                    ShowMessage("NEW WAVE");
+                    Score += (int) values[1];
                 }
-
-                // timer ready
-                AddMeteor((int) values[1],(int) values[2]);
+                else
+                {
+                    // timer ready
+                    AddMeteor((int)values[1], (int)values[2]);
+                }               
 
                 //reset timer based on wave speed
                 timer = values[0];
@@ -107,6 +118,15 @@ public class Backend : MonoBehaviour {
             {
                 // decrease timer
                 timer -= Time.deltaTime;
+            }
+
+            if (messageTimer < 0f)
+            {
+                HideMessage();
+            }
+            else
+            {
+                messageTimer -= Time.deltaTime;
             }
         }
 
@@ -138,7 +158,21 @@ public class Backend : MonoBehaviour {
     {
         _instance.Score += meteor.Value;
         Destroy(meteor.gameObject);
+    }
 
-        Debug.Log("SCORE: " + _instance.Score);
+    private void ShowScore()
+    {
+        scoreText.text = "SCORE:\n" + Score;
+    }
+
+    private void HideMessage()
+    {
+        messageText.text = "";
+    }
+
+    private void ShowMessage(string message)
+    {
+        messageText.text = message;
+        messageTimer = messageTime;
     }
 }
