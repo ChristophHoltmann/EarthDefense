@@ -14,6 +14,9 @@ public class Backend : MonoBehaviour {
     public MeshRenderer[] hearts;
     private const int newWaveScore = 50;
 
+    [Serializable]
+    private GameObject earthExplosion;
+
     //public int numberWaves { get; private set; }
     //private int currentWave = -1;
     private int currentMeteorNumber = 0;
@@ -90,6 +93,15 @@ public class Backend : MonoBehaviour {
             if (Life <= 0)
             {
                 ShowMessage("GAME OVER");
+
+                if(earthExplosion != null)
+                {
+                    var exlopsionObject = Instantiate(earthExplosion);
+                    exlopsionObject.transform.position = Earth.transform.position;
+
+                    Destroy(Earth.gameObject);
+                }
+
                 gameFinished = true;
             }
 
