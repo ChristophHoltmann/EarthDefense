@@ -167,7 +167,6 @@ public class HandsTrackingController : MonoBehaviour
                 if (args.state.sourcePose.TryGetPosition(out pos))
                 {
                     trackingObject[id].transform.position = pos;
-                    StatusText.text += pos;
                 }
 
                 if (args.state.sourcePose.TryGetRotation(out rot))

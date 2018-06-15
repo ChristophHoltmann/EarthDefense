@@ -9,6 +9,9 @@ public class HandPosition : MonoBehaviour
 {
     public GameObject foo;
 
+    private 
+
+
     // Use this for initialization
     void Start()
     {
