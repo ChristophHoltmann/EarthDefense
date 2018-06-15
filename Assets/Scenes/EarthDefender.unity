@@ -468,6 +468,8 @@ MonoBehaviour:
   - {fileID: 245627333}
   - {fileID: 245627332}
   - {fileID: 245627331}
+  earthExplosion: {fileID: 1676944783879570, guid: 06e3fb5b4f46a8e4a89afd9ddde72992,
+    type: 2}
   particlePrefab: {fileID: 1206477792905446, guid: 55e9d5277e1434945bd8c64e2fea6f3b,
     type: 2}
   asteroids:

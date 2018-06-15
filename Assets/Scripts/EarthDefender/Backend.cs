@@ -99,7 +99,7 @@ public class Backend : MonoBehaviour {
                     var exlopsionObject = Instantiate(earthExplosion);
                     exlopsionObject.transform.position = Earth.transform.position;
 
-                    Destroy(Earth.gameObject);
+                    Earth.transform.Find("EarthHigh").gameObject.SetActive(false);
                 }
 
                 gameFinished = true;
