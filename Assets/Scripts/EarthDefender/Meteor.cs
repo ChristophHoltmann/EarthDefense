@@ -39,6 +39,7 @@ public class Meteor : MonoBehaviour {
 
         if (Input.GetKeyDown("c"))
         {
+            print("clicked");
             OnClick();
         }
 	}

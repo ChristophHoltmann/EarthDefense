@@ -12,6 +12,7 @@ public class Backend : MonoBehaviour {
     public TextMesh scoreText;
     public TextMesh messageText;
     public MeshRenderer[] hearts;
+    private const int newWaveScore = 50;
 
     //public int numberWaves { get; private set; }
     //private int currentWave = -1;
@@ -51,17 +52,17 @@ public class Backend : MonoBehaviour {
         Life = 3;
         RangeMaxMetoer = 3f;
         var newWaveTime = messageTime;
-        // speed, value, robustness
+        // time, value, robustness
         // robustness new wave
         meteors = new float[][] {
-            new float[]{ newWaveTime, 0f,0f },
-            new float[]{2f,10f,1f }, new float[] { 2f, 10f, 1f }, new float[] { 2f, 10f, 1f },
-            new float[]{ newWaveTime, 50f,0f },
-            new float[]{1.5f,10f,1f }, new float[]{ 1.5f, 10f,1f },new float[]{ 1.5f, 30f,2f },
-            new float[]{ newWaveTime, 50f,0f },
-            new float[]{1f,15f,1f },new float[]{1f,15f,1f },new float[]{1f,30f,2f },new float[]{1f,30f,2f },
-            new float[]{ newWaveTime, 50f,0f },
-            new float[]{0.5f,30f,3f }, new float[]{ 0.5f,30f,3f },new float[]{ 0.5f,30f,3f },};
+            new float[]{ newWaveTime, 0f },
+            new float[]{2f,1f }, new float[] { 2f, 1f }, new float[] { 2f, 1f },
+            new float[]{ newWaveTime, 0f },
+            new float[]{1.5f,1f }, new float[]{ 1.5f, 1f },new float[]{ 1.5f, 2f },
+            new float[]{ newWaveTime, 0f },
+            new float[]{1f,1f },new float[]{1f,1f },new float[]{1f,2f },new float[]{1f,2f },
+            new float[]{ newWaveTime, 0f },
+            new float[]{0.5f,3f }, new float[]{ 0.5f,3f },new float[]{ 0.5f,3f },};
 
 
         // singelton
@@ -98,16 +99,16 @@ public class Backend : MonoBehaviour {
             {
                 var values = meteors[currentMeteorNumber];
 
-                if(values[2] < 0.001f)
+                if(values[1] < 0.001f)
                 {
                     //new wave
                     ShowMessage("NEW WAVE");
-                    Score += (int) values[1];
+                    Score += newWaveScore;
                 }
                 else
                 {
                     // timer ready
-                    AddMeteor((int)values[1], (int)values[2]);
+                    AddMeteor((int)calcScore(values[0], values[1]),(int)values[1]);
                 }               
 
                 //reset timer based on wave speed
@@ -133,6 +134,11 @@ public class Backend : MonoBehaviour {
         }
 
 	}
+
+    private float calcScore(float timing, float robustness)
+    {
+        return 10f * robustness * ((2f - timing) + 1f);
+    }
 
     private void ShowHearts()
     {
