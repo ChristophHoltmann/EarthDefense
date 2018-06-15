@@ -14,8 +14,11 @@ public class Earth : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Collide");
-        Backend.EarthHit();
-        Destroy(other.gameObject);
+        if (other.GetComponent<Meteor>() != null)
+        {
+            Backend.EarthHit();
+            Destroy(other.gameObject);
+        }
     }
 
    
