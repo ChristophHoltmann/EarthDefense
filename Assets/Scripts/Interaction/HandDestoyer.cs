@@ -26,7 +26,7 @@ public class HandDestoyer : MonoBehaviour
             return;
         }
 
-        if(other.tag.Equals("Destroyable"))
+        if (other.tag.Equals("Destroyable"))
         {
             Destroy(other.gameObject);
         }
