@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backend : MonoBehaviour {
-
+public class Backend : MonoBehaviour {
+
     public AudioSource source;
     public AudioClip bgMusic;
     public AudioClip gameOverSound;
@@ -17,6 +17,9 @@ public class Backend : MonoBehaviour {
     public TextMesh messageText;
     public MeshRenderer[] hearts;
     private const int newWaveScore = 50;
+
+    [SerializeField]
+    private GameObject earthExplosion;
 
     //public int numberWaves { get; private set; }
     //private int currentWave = -1;
@@ -50,7 +53,7 @@ public class Backend : MonoBehaviour {
 
 
     // Use this for initialization
-    void Awake () {
+    void Awake () {
         //source.Play((AudioClip)Resources.Load("bgMusic"));
         
         // Init values
@@ -75,14 +78,14 @@ public class Backend : MonoBehaviour {
         _instance = this;
 
         source.clip = bgMusic;
-        source.Play();
-    }
-
-
-
-
-
-    // Update is called once per frame
+        source.Play();
+    }
+
+
+
+
+
+    // Update is called once per frame
     void Update () {
 
         ShowScore();
@@ -99,10 +102,19 @@ public class Backend : MonoBehaviour {
             if (Life <= 0)
             {
                 ShowMessage("GAME OVER");
+
+                if(earthExplosion != null)
+                {
+                    var exlopsionObject = Instantiate(earthExplosion);
+                    exlopsionObject.transform.position = Earth.transform.position;
+
+                    Earth.transform.Find("EarthHigh").gameObject.SetActive(false);
+                }
+
                 gameFinished = true;
-                source.Stop();
-                source.clip = null;
-                //source.PlayOneShot((AudioClip)Resources.Load("gameOver"));
+                source.Stop();
+                source.clip = null;
+                //source.PlayOneShot((AudioClip)Resources.Load("gameOver"));
                 source.clip = gameOverSound;
                 source.Play();
             }

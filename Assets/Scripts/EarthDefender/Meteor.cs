@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Meteor : MonoBehaviour {
 
+    [SerializeField]
+    private GameObject explosion;
+
     private bool moving = false;
     private const float _speed = 0.75f;
    
@@ -20,6 +23,13 @@ public class Meteor : MonoBehaviour {
     public void OnClick()
     {
         Robustness--;
+
+        if(explosion != null)
+        {
+            var explosionObject = Instantiate(explosion) as GameObject;
+            explosionObject.transform.position = transform.position;
+        }
+
         if(Robustness <= 0)
         {
             Backend.DestroyMeteor(this);
