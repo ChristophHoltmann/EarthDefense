@@ -30,7 +30,7 @@ public class Backend : MonoBehaviour {
 
     public int Life { get; private set; }
     private static Backend _instance;
-    public GameObject prefabMeteor;
+    public GameObject particlePrefab;
 
     public static Vector3 getEarthPos()
     {
@@ -131,6 +131,8 @@ public class Backend : MonoBehaviour {
         go.AddComponent<SphereCollider>();
         var col = go.GetComponent<SphereCollider>();
         col.isTrigger = true;
+
+        Instantiate(particlePrefab, go.transform);
 
         return go;
     }

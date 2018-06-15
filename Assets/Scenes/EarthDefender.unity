@@ -453,7 +453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cb3cf837b2a9945a19f5f62ec3f798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabMeteor: {fileID: 0}
+  particlePrefab: {fileID: 1206477792905446, guid: 55e9d5277e1434945bd8c64e2fea6f3b,
+    type: 2}
   asteroids:
   - {fileID: 1199607468765168, guid: b0420666fff29234c9aa29c6e0fd971f, type: 2}
   - {fileID: 1649358917264296, guid: 3f718570a16fb71418a85c2a54f937e2, type: 2}
