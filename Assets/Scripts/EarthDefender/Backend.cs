@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Backend : MonoBehaviour {
+public class Backend : MonoBehaviour
+{
 
     public AudioSource source;
     public AudioClip bgMusic;
@@ -14,7 +15,7 @@ public class Backend : MonoBehaviour {
     public int Score { get; private set; }
     public Earth Earth { get; private set; }
     public float RangeMaxMetoer { get; private set; }
-
+    public GameObject turretObject;
     public TextMesh scoreText;
     public TextMesh messageText;
     public MeshRenderer[] hearts;
@@ -62,7 +63,8 @@ public class Backend : MonoBehaviour {
 
 
     // Use this for initialization
-    void Awake () {
+    void Awake()
+    {
         //source.Play((AudioClip)Resources.Load("bgMusic"));
 
         // Init values
@@ -90,13 +92,32 @@ public class Backend : MonoBehaviour {
         source.Play();
     }
 
-    // Update is called once per frame
+    public void BuyTurret()
+    {
+        var earthPos = getEarthPos();
+        var meteorPosRelative = new Vector3(0.5f, 0, 0);
+        var earthAround = UnityEngine.Random.Range(0f, 1f);
+        var angleUp = UnityEngine.Random.Range(0f, 1f);
+        meteorPosRelative = Quaternion.Euler(0, 360 * earthAround, 45 * angleUp) * meteorPosRelative;
 
+        //set position
+        var position = earthPos + meteorPosRelative;
+        AddTurret(position);
+    }
+
+
+
+    // Update is called once per frame
     void Update()
     {
+
         if (!gameHasStarted)
         {
             return;
+        }
+        if (Input.GetKeyDown("a"))
+        {
+            BuyTurret();
         }
 
         ShowScore();
@@ -174,7 +195,32 @@ public class Backend : MonoBehaviour {
             {
                 messageTimer -= Time.deltaTime;
             }
+
+
         }
+
+    }
+
+    private const int costTurret = 30;
+
+    private void AddTurret(Vector3 position)
+    {
+
+        if (Score >= costTurret)
+        {
+            // remove costs
+            Score -= costTurret;
+
+            //instantiate
+            var turret = Instantiate<GameObject>(turretObject);
+            turret.transform.position = position;
+
+        }
+        else
+        {
+            ShowMessage("Not enough points");
+        }
+
 
     }
 
@@ -251,7 +297,7 @@ public class Backend : MonoBehaviour {
 
     private void ShowScore()
     {
-        scoreText.text = "SCORE:\n" + Score;
+        scoreText.text = "Points:\n" + Score;
     }
 
     private void HideMessage()

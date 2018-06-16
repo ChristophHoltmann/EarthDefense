@@ -17,6 +17,11 @@ public class Meteor : MonoBehaviour {
     public int Value { get; private set; }
     public int Robustness { get; private set; }
 
+    private void Start()
+    {
+        source = gameObject.AddComponent<AudioSource>();
+    }
+
     public void setParameters(int value, int robustness)
     {
         Value = value;

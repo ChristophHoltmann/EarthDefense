@@ -19,15 +19,17 @@ public class Earth : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Backend.EarthHit();
-        Destroy(other.gameObject);
-        flicker.StartFlicker();
+        //Debug.Log("Collide");
+        if (other.GetComponent<Meteor>() != null)
+        {
+            Backend.EarthHit();
+            Destroy(other.gameObject);
+            flicker.StartFlicker();
 
-        source.clip = takeOffSound;
-        source.Play();
-        source.clip = explosionSound;
-        source.Play();
+            source.clip = takeOffSound;
+            source.Play();
+            source.clip = explosionSound;
+            source.Play();
+        }
     }
-
-   
 }
