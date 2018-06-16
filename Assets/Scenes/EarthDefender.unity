@@ -825,9 +825,11 @@ MonoBehaviour:
   particlePrefab: {fileID: 1206477792905446, guid: 55e9d5277e1434945bd8c64e2fea6f3b,
     type: 2}
   asteroids:
-  - {fileID: 1199607468765168, guid: b0420666fff29234c9aa29c6e0fd971f, type: 2}
-  - {fileID: 1649358917264296, guid: 3f718570a16fb71418a85c2a54f937e2, type: 2}
+  - {fileID: 1730761576565476, guid: 94d8a724e900680459a28eb249d01aa4, type: 2}
+  - {fileID: 1862171211519566, guid: 178a5c7def69d374bb0fe6c69fad26cb, type: 2}
   - {fileID: 1486007128789986, guid: 89d9b6998e9f1c341890fa18d962a7c2, type: 2}
+  - {fileID: 1390869775903564, guid: fa3ae4db185cbf242b5137fe2e48063f, type: 2}
+  - {fileID: 1120493405082086, guid: 99741bfa84128e8488b05439fe7331c6, type: 2}
   - {fileID: 1446100533530190, guid: 921c30dda84368c4a9a1d015ffe7a797, type: 2}
 --- !u!4 &1932426741
 Transform:
