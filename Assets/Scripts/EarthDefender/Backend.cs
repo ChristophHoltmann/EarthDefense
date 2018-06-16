@@ -57,12 +57,17 @@ public class Backend : MonoBehaviour {
         meteors = new float[][] {
             new float[]{ newWaveTime, 0f },
             new float[]{2f,1f }, new float[] { 2f, 1f }, new float[] { 2f, 1f },
+            new float[]{2f,1f }, new float[] { 2f, 1f }, new float[] { 2f, 1f },
             new float[]{ newWaveTime, 0f },
-            new float[]{1.5f,1f }, new float[]{ 1.5f, 1f },new float[]{ 1.5f, 2f },
+            new float[]{1.5f,1f }, new float[]{ 1.5f, 1f }, new float[]{1.5f,1f },
+            new float[]{ 1.5f, 1f }, new float[]{1.5f,1f }, new float[]{ 1.5f, 1f },
             new float[]{ newWaveTime, 0f },
-            new float[]{1f,1f },new float[]{1f,1f },new float[]{1f,2f },new float[]{1f,2f },
+            new float[]{1f,1f },new float[]{1f,1f },new float[]{1f,1f },new float[]{1f,1f },
+            new float[]{1f,1f },new float[]{1f,1f },
             new float[]{ newWaveTime, 0f },
-            new float[]{0.5f,3f }, new float[]{ 0.5f,3f },new float[]{ 0.5f,3f },};
+            new float[]{0.5f,1f },new float[]{0.5f,1f },new float[]{0.5f,1f },
+            new float[]{0.5f,1f },new float[]{0.5f,1f },new float[]{0.5f,1f },
+        };
 
 
         // singelton
